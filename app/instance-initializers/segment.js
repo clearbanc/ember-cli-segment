@@ -1,8 +1,8 @@
 // import getOwner from 'ember-getowner-polyfill';
 
 export function initialize(appInstance) {
-  const router = appInstance.lookup('router:main');
-  const segment = appInstance.lookup('service:segment');
+  const router = appInstance.container.lookup('router:main');
+  const segment = appInstance.container.lookup('service:segment');
 
   if (segment && segment.pageTrackEnabled()) {
     router.on('didTransition', function() {
@@ -12,7 +12,7 @@ export function initialize(appInstance) {
 
   if (segment && segment.identifyUserEnabled()) {
     router.on('didTransition', function() {
-      const applicationRoute = appInstance.lookup('route:application');
+      const applicationRoute = appInstance.container.lookup('route:application');
 
       if (applicationRoute && typeof applicationRoute.identifyUser === 'function') {
         applicationRoute.identifyUser();
